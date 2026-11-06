@@ -17,6 +17,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.heartratelimits.ui.theme.HeartRateLimitsTheme
@@ -42,13 +46,34 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun HeartRateLimits(modifier: Modifier = Modifier) {
+
+    // Saving the age entered by the user
+    var ageInput by remember { mutableStateOf("") }
+
+    // Converting text to a number
+    val age = ageInput.toIntOrNull() ?: 0
+
+    // Calculating heart rate
+    val upper = if (age > 0) {
+        (220 - age) * 0.85f
+    } else {
+        0.0f
+    }
+
+    val lower = if (age > 0) {
+        (220 - age) * 0.65f
+    } else {
+        0.0f
+    }
+
     Column(
-        modifier = modifier.padding(8.dp),
+        modifier = modifier.padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         TextField(
-            value = "",
-            onValueChange = {},
+            value = ageInput,
+            // Automatic user interface updates
+            onValueChange = { ageInput = it },
             label = { Text(text = "Age") },
             singleLine = true,
             keyboardOptions = KeyboardOptions(
@@ -58,7 +83,7 @@ fun HeartRateLimits(modifier: Modifier = Modifier) {
         )
 
         Text(
-            text = "Your heart rate limits are"
+            text = "Your heart rate limits are $lower - $upper"
         )
     }
 }

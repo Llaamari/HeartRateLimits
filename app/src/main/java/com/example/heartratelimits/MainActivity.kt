@@ -1,3 +1,4 @@
+
 package com.example.heartratelimits
 
 import android.os.Bundle
@@ -17,11 +18,13 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
         setContent {
             HeartRateLimitsTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
+                Scaffold(
+                    modifier = Modifier.fillMaxSize()
+                ) { innerPadding ->
+                    HeartRateLimits(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -31,17 +34,17 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
+fun HeartRateLimits(modifier: Modifier = Modifier) {
     Text(
-        text = "Hello $name!",
+        text = "Your heart rate limits are",
         modifier = modifier
     )
 }
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun HeartRateLimitsPreview() {
     HeartRateLimitsTheme {
-        Greeting("Android")
+        HeartRateLimits()
     }
 }

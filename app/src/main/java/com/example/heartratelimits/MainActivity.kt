@@ -23,7 +23,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.res.stringResource
 import com.example.heartratelimits.ui.theme.HeartRateLimitsTheme
+import java.util.Locale
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,6 +67,8 @@ fun HeartRateLimits(modifier: Modifier = Modifier) {
     } else {
         0.0f
     }
+    val upperFormatted = String.format(Locale.getDefault(), "%.2f", upper)
+    val lowerFormatted = String.format(Locale.getDefault(), "%.2f", lower)
 
     Column(
         modifier = modifier.padding(16.dp),
@@ -74,7 +78,7 @@ fun HeartRateLimits(modifier: Modifier = Modifier) {
             value = ageInput,
             // Automatic user interface updates
             onValueChange = { ageInput = it },
-            label = { Text(text = "Age") },
+            label = { Text(text = stringResource(R.string.age)) },
             singleLine = true,
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Number
@@ -83,7 +87,11 @@ fun HeartRateLimits(modifier: Modifier = Modifier) {
         )
 
         Text(
-            text = "Your heart rate limits are $lower - $upper"
+            text = stringResource(
+                R.string.your_heart_rate_limits_are,
+                lowerFormatted,
+                upperFormatted
+            )
         )
     }
 }
